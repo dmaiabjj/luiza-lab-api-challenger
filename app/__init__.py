@@ -3,8 +3,9 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_user import UserManager
 
+from app.controllers import heart_beat
 
-from .model.customer import Customer
+from app.domain.customer.customer import Customer
 
 # Instantiate Flask extensions
 db = SQLAlchemy()
@@ -29,6 +30,9 @@ def create_app(environment="local", settings=None):
 
     # Setup Flask-Migrate
     migrate.init_app(app, db)
+
+    # Register blueprints
+    app.register_blueprint(heart_beat)
 
     UserManager(app, db, Customer)
 
