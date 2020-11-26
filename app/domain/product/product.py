@@ -1,12 +1,12 @@
 from app import db
-from app._domain.base_model import BaseModel
+from app.domain import BaseModel
 
 
-# Define the Product data _domain
-class Product(BaseModel):
+# Define the Product Domain
+class Product(db.Model, BaseModel):
     __tablename__ = 'products'
-    title = db.Column(db.String(256))
-    brand = db.Column(db.String(256))
-    image = db.Column(db.Text)
-    price = db.Column(db.Float)
-    review_score = db.Column(db.Float)
+    title = db.Column(db.String(256), nullable=False)
+    brand = db.Column(db.String(256), nullable=False)
+    image = db.Column(db.Text, nullable=True)
+    price = db.Column(db.Float, nullable=False)
+    review_score = db.Column(db.Float, nullable=True)

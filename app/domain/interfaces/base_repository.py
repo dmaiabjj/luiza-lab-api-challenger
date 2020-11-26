@@ -9,16 +9,22 @@ class BaseRepository:
 
     def add(self, entity):
         self.__session.add(entity)
+        self.__session.commit()
+        return entity
+
+    def update(self, entity):
+        self.__session.add(entity)
+        self.__session.commit()
         return entity
 
     def find_by_id(self, id):
-        self.__session.query(self.__clazz).filter(self.__clazz.id == id).order_by(self.__clazz.id).first()
+        return self.__clazz.query.filter(self.__clazz.id == id).one_or_none()
 
     def get_all(self):
-        self.__session.query(self.__clazz).all()
+        return self.__clazz.query.all()
 
     def get_all_by_paging(self, offset=None, limit=None):
-        query = self.__session.query(self.__clazz).order_by(self.__clazz.id)
-        query = query.offset(offset) if offset else query
+        query = self.__clazz.query.order_by(self.__clazz.id)
+        query = query.offset(offset - 1) if offset else query
         query = query.limit(limit) if limit else query
         return query.all()
