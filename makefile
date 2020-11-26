@@ -15,6 +15,7 @@ build/dependencies/install:
 #   make build/dependencies/lib/safety-check
 #
 build/dependencies/lib/safety-check:
-	$(PYTHON_BIN)/safety check -r requirements.txt
+	$(PYTHON_BIN)/safety check -r ./config/requirements.txt
+	$(PYTHON_BIN)/safety check -r ./config/build_requirements.txt
 
 PYTHON_BIN ?= .venv/bin

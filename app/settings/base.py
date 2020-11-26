@@ -21,3 +21,6 @@ USER_ENABLE_USERNAME = False  # Register and Login with username
 USER_AFTER_LOGIN_ENDPOINT = 'main.member_page'
 USER_AFTER_LOGOUT_ENDPOINT = 'main.member_page'
 USER_ALLOW_LOGIN_WITHOUT_CONFIRMED_EMAIL = False
+
+# email-manager settings
+USER_EMAIL_SENDER_EMAIL = "jedi@luizalabs.com.br"

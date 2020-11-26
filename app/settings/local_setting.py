@@ -7,6 +7,6 @@ DEBUG = True
 SECRET_KEY = 'This is an UNSECURE Secret. CHANGE THIS for production environments.'
 
 # SQLAlchemy Settings
-SQLALCHEMY_DATABASE_URI = 'sqlite:///../app.sqlite'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///../core.sqlite'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SESSION_TYPE = 'sqlalchemy'
