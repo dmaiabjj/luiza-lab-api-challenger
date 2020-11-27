@@ -18,4 +18,10 @@ build/dependencies/lib/safety-check:
 	$(PYTHON_BIN)/safety check -r ./config/requirements.txt
 	$(PYTHON_BIN)/safety check -r ./config/build_requirements.txt
 
+db/initialize:
+	python manage.py init_db
+
+run:
+	python manage.py runserver
+
 PYTHON_BIN ?= .venv/bin

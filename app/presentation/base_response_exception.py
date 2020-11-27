@@ -1,5 +1,6 @@
 class BaseResponseException(Exception):
     status_code = 500
+    message = "An unexpected error happened sorry"
 
     def __init__(self, message, status_code=None, payload=None):
         Exception.__init__(self)
@@ -20,3 +21,13 @@ class NotFoundException(BaseResponseException):
 class BadRequestException(BaseResponseException):
     def __init__(self, message, payload=None):
         super().__init__(message=message, payload=payload, status_code=400)
+
+
+class UnauthorizedException(BaseResponseException):
+    def __init__(self, message, payload=None):
+        super().__init__(message=message, payload=payload, status_code=401)
+
+
+class ResourceAlreadyExistsException(BaseResponseException):
+    def __init__(self, message, payload=None):
+        super().__init__(message=message, payload=payload, status_code=409)

@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request, current_app
+from flask_jwt_extended import jwt_required
 
 from app.domain.customer.customer import Customer
 from app.domain.customer.customer_repository import CustomerRepository
@@ -10,6 +11,7 @@ customer_repository = CustomerRepository()
 
 
 @customer_blueprint.route('/customer', methods=['POST'])
+@jwt_required
 def add():
     customer_schema = CustomerInputSchema()
     data = request.get_json()

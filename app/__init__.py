@@ -1,14 +1,17 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from flask_user import UserManager
+from flask_jwt_extended import (
+    JWTManager
+)
 
 # Instantiate Flask extensions
 db = SQLAlchemy()
 migrate = Migrate()
 
-from app.controllers.health_check import health_check_blueprint
-from app.controllers.customer import customer_blueprint
+from app.controllers.authentication_controller import authentication_blueprint
+from app.controllers.health_check_controller import health_check_blueprint
+from app.controllers.customer_controller import customer_blueprint
 from app.domain.customer.customer import Customer
 
 
@@ -35,8 +38,9 @@ def create_app(environment="local", settings=None):
 
     # Register blueprints
     app.register_blueprint(health_check_blueprint)
+    app.register_blueprint(authentication_blueprint)
     app.register_blueprint(customer_blueprint)
 
-    UserManager(app, db, Customer)
+    JWTManager(app)
 
     return app

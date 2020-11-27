@@ -1,4 +1,4 @@
-from flask import current_app
+from werkzeug.security import generate_password_hash
 from flask_script import Command
 from sqlalchemy import and_
 
@@ -48,7 +48,7 @@ def find_or_create_user(name, email, password):
     user = Customer.query.filter(Customer.email == email).one_or_none()
     if not user:
         user = Customer(name=name, email=email,
-                        password=current_app.user_manager.hash_password(password))
+                        password=generate_password_hash(password))
 
         db.session.add(user)
     return user

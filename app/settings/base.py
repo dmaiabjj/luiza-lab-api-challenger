@@ -23,4 +23,4 @@ USER_AFTER_LOGOUT_ENDPOINT = 'main.member_page'
 USER_ALLOW_LOGIN_WITHOUT_CONFIRMED_EMAIL = False
 
 # email-manager settings
-USER_EMAIL_SENDER_EMAIL = "jedi@luizalabs.com.br"
+JWT_SECRET_KEY = "luiza-labs-super-secret"
