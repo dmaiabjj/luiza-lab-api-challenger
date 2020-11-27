@@ -13,10 +13,10 @@ class CustomerInputSchema(Schema):
 
 
 class CustomerUpdateInputSchema(Schema):
-    name = fields.Str(required=True)
-    email = fields.Email(required=True)
+    name = fields.Str(required=False)
+    email = fields.Email(required=False)
 
 
-class ChangePasswordUpdateInputSchema(Schema):
+class CustomerChangePasswordUpdateInputSchema(Schema):
     password = fields.Str(required=True)
     new_password = fields.Str(required=True)

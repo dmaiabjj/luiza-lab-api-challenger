@@ -21,15 +21,15 @@ class CustomerService:
         return customer.to_dict()
 
     def update(self, customer_updated):
-        customer = self.__repository.find_by_id(id=customer_updated.id)
+        customer = self.__repository.find_by_id(id=customer_updated['id'])
         if customer is None:
             raise NOT_FOUND_EXCEPTION
 
-        customer_exists = self.__repository.find_by_email(customer_updated.email)
-        if customer_exists and customer_exists.id != customer_updated.id:
+        customer_exists = self.__repository.find_by_email(customer_updated['email'])
+        if customer_exists and customer_exists.id != customer_updated['id']:
             raise RESOURCE_ALREADY_EXISTS_EXCEPTION
 
-        self.__repository.update_from_model(customer, customer_updated)
+        self.__repository.update_from_dict(customer, customer_updated)
 
         return customer.to_dict()
 

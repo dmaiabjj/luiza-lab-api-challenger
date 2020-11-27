@@ -1,16 +1,21 @@
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_raw_jwt
 from werkzeug.security import generate_password_hash
 
+from app import blacklist
 from app.domain.customer.customer import Customer
 from app.domain.customer.customer_repository import CustomerRepository
 from app.domain.customer.customer_schema import CustomerInputSchema, CustomerUpdateInputSchema, \
-    ChangePasswordUpdateInputSchema
+    CustomerChangePasswordUpdateInputSchema
 from app.domain.customer.customer_service import CustomerService
 from app.presentation.base_response_exception import BadRequestException
 
 customer_blueprint = Blueprint('customer', __name__, url_prefix='/api')
 customer_service = CustomerService(repository=CustomerRepository())
+
+
+def logout(jti):
+    blacklist.add(jti)
 
 
 @customer_blueprint.route('/customer', methods=['POST'])
@@ -34,8 +39,7 @@ def add():
 @customer_blueprint.route('/customer', methods=['PUT'])
 @jwt_required
 def update():
-    user_logged = get_jwt_identity()
-
+    current_user = get_jwt_identity()
     customer_schema = CustomerUpdateInputSchema()
     data = request.get_json()
 
@@ -43,10 +47,9 @@ def update():
     if errors:
         raise BadRequestException(message="Invalid Customer Data", payload=errors)
 
-    email = request.json.get('email', None)
-    name = request.json.get('name', None)
+    data['id'] = current_user['id']
 
-    customer = customer_service.update(Customer(id=int(user_logged['id']), name=name, email=email))
+    customer = customer_service.update(data)
 
     return jsonify(customer)
 
@@ -54,17 +57,17 @@ def update():
 @customer_blueprint.route('/customer', methods=['DELETE'])
 @jwt_required
 def delete():
-    user_logged = get_jwt_identity()
-    customer_service.delete(id=int(user_logged['id']))
+    current_user = get_jwt_identity()
+    customer_service.delete(id=current_user['id'])
+    logout(get_raw_jwt()['jti'])
     return {}, 200
 
 
 @customer_blueprint.route('/customer/password', methods=['PUT'])
 @jwt_required
 def change_password():
-    user_logged = get_jwt_identity()
-
-    change_password_schema = ChangePasswordUpdateInputSchema()
+    current_user = get_jwt_identity()
+    change_password_schema = CustomerChangePasswordUpdateInputSchema()
     data = request.get_json()
 
     errors = change_password_schema.validate(data)
@@ -74,7 +77,7 @@ def change_password():
     password = request.json.get('password', '')
     new_password = generate_password_hash(request.json.get('new_password', ''))
 
-    customer_service.change_password(Customer(id=int(user_logged['id']), password=new_password), password=password)
+    customer_service.change_password(Customer(id=current_user['id'], password=new_password), password=password)
 
     return {}, 200
 

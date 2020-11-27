@@ -1,4 +1,5 @@
 import enum
+from datetime import datetime
 
 from sqlalchemy.orm import relationship
 from werkzeug.security import check_password_hash
@@ -8,27 +9,33 @@ from app.domain import BaseModel
 
 
 class RoleCategory(enum.Enum):
-    SUPER_USER = 1
-    CUSTOMER_EXPERIENCE = 2
-    FINANCIAL = 3
+    BASIC = 1
+    SUPER_USER = 2
+    CUSTOMER_EXPERIENCE = 3
+    FINANCIAL = 4
 
+    @classmethod
+    def get_value(cls, member):
+        return cls.__get_values().get(member)
 
-# Define the Role Domain
-class Role(db.Model, BaseModel):
-    __tablename__ = 'roles'
-
-    name = db.Column(db.String(512), nullable=False, server_default='')
-    description = db.Column(db.Text, nullable=False, server_default='')
-    category = db.Column(db.Enum(RoleCategory), default=RoleCategory.SUPER_USER)
+    @classmethod
+    def __get_values(cls):
+        return {
+            'BASIC': RoleCategory.BASIC,
+            'SUPER_USER': RoleCategory.SUPER_USER,
+            'CUSTOMER_EXPERIENCE': RoleCategory.CUSTOMER_EXPERIENCE,
+            'FINANCIAL': RoleCategory.FINANCIAL
+        }
 
 
 # Define the User Role Domain
 class UserRole(db.Model, BaseModel):
-    __tablename__ = 'user_roles'
-    __table_args__ = (db.UniqueConstraint('user_id', 'role_id', name='_user_id_role_id'),)
+    __tablename__ = 'roles'
+    __table_args__ = (db.UniqueConstraint('user_id', 'category', name='_user_id_role_category'),)
+    serialize_rules = ('-deleted_date', '-updated_date', '-user_id', '-id', '-created_date')
 
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    category = db.Column(db.Enum(RoleCategory), default=RoleCategory.SUPER_USER)
 
 
 # Define the User Domain
@@ -42,8 +49,14 @@ class User(db.Model, BaseModel):
 
     roles = relationship(
         "UserRole",
-        lazy='joined',
-        uselist=False)
+        lazy='joined')
 
     def verify_password(self, pwd):
         return check_password_hash(self.password, pwd)
+
+    def change_roles(self, roles):
+        self.updated_date = datetime.utcnow()
+        all_roles = list(map(lambda role: role.category, self.roles))
+        for r in roles:
+            if r.category not in all_roles:
+                self.roles.append(r)

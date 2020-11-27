@@ -5,7 +5,7 @@ from app.domain.user.user_repository import UserRepository
 from app.domain.user.user_service import UserService
 from app.presentation.base_response_exception import BadRequestException
 
-admin_authentication_blueprint = Blueprint('authentication', __name__, url_prefix='admin/api')
+admin_authentication_blueprint = Blueprint('admin_authentication', __name__, url_prefix='/admin/api')
 user_service = UserService(repository=UserRepository())
 
 

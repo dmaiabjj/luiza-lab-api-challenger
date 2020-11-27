@@ -22,5 +22,7 @@ USER_AFTER_LOGIN_ENDPOINT = 'main.member_page'
 USER_AFTER_LOGOUT_ENDPOINT = 'main.member_page'
 USER_ALLOW_LOGIN_WITHOUT_CONFIRMED_EMAIL = False
 
-# email-manager settings
+# JWT
 JWT_SECRET_KEY = "luiza-labs-super-secret"
+JWT_BLACKLIST_ENABLED = True
+JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']

@@ -5,7 +5,7 @@ from sqlalchemy import and_
 from app import db
 from app.domain.customer.customer import Customer
 from app.domain.product.product import Product
-from app.domain.user.user import Role, User, UserRole, RoleCategory
+from app.domain.user.user import User, UserRole, RoleCategory
 from app.domain.wishlist.wishlist import WishList
 
 
@@ -29,19 +29,15 @@ def create_customer():
     # Create all tables
     db.create_all()
 
-    # Add role
-    super_user = find_or_create_role(category=RoleCategory.SUPER_USER)
-    find_or_create_role(category=RoleCategory.CUSTOMER_EXPERIENCE)
-    find_or_create_role(category=RoleCategory.FINANCIAL)
-
     # Add user
     user = find_or_create_user(name='Luke Skywalker', email='luke@luizalabs.com.br',
                                password='darthVaderIsMyFather')
 
     db.session.commit()
 
-    # Add wishlist
-    find_or_create_user_role(user_id=user.id, role_id=super_user.id)
+    # Add user role
+    find_or_create_user_role(user_id=user.id, category=RoleCategory.SUPER_USER)
+    find_or_create_user_role(user_id=user.id, category=RoleCategory.CUSTOMER_EXPERIENCE)
 
     # Add customer
     customer = find_or_create_customer(name='Anakin Skywalker', email='anakin@starwars.com.br',
@@ -58,16 +54,6 @@ def create_customer():
     db.session.commit()
 
 
-def find_or_create_role(category):
-    """ Find existing role or create new role """
-    role = Role.query.filter(Role.category == category).one_or_none()
-    if not role:
-        role = Role(name=category.name, category=category)
-
-        db.session.add(role)
-    return role
-
-
 def find_or_create_user(name, email, password):
     """ Find existing user or create new user """
     user = User.query.filter(User.email == email).one_or_none()
@@ -79,12 +65,12 @@ def find_or_create_user(name, email, password):
     return user
 
 
-def find_or_create_user_role(user_id, role_id):
+def find_or_create_user_role(user_id, category):
     """ Find existing user role or create new user role """
     user_role = UserRole.query.filter(and_(UserRole.user_id == user_id,
-                                           UserRole.role_id == role_id)).one_or_none()
+                                           UserRole.category == category)).one_or_none()
     if not user_role:
-        user_role = UserRole(user_id=user_id, role_id=role_id)
+        user_role = UserRole(user_id=user_id, category=category)
 
         db.session.add(user_role)
 

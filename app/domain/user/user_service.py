@@ -1,3 +1,4 @@
+from app.domain.user.user import UserRole, RoleCategory, User
 from app.presentation.base_response_exception import ResourceAlreadyExistsException, NotFoundException, \
     UnauthorizedException, BadRequestException
 
@@ -20,16 +21,20 @@ class UserService:
 
         return user.to_dict()
 
-    def update(self, user_updated):
-        user = self.__repository.find_by_id(id=user_updated.id)
+    def update(self, user_updated, roles):
+
+        user = self.__repository.find_by_id(id=user_updated['id'])
         if user is None:
             raise NOT_FOUND_EXCEPTION
 
-        customer_exists = self.__repository.find_by_email(user_updated.email)
-        if customer_exists and customer_exists.id != user_updated.id:
+        user_exists = self.__repository.find_by_email(user_updated['email'])
+        if user_exists and user_exists.id != user_updated['id']:
             raise RESOURCE_ALREADY_EXISTS_EXCEPTION
 
-        self.__repository.update_from_model(user, user_updated)
+        roles = list(map(lambda category: UserRole(category=RoleCategory.get_value(category)), roles))
+        user.change_roles(roles)
+
+        self.__repository.update_from_model(user, User(name=user_updated['name'], email=user_updated['email']))
 
         return user.to_dict()
 
