@@ -9,9 +9,9 @@ from flask_jwt_extended import (
 db = SQLAlchemy()
 migrate = Migrate()
 
-from app.controllers.authentication_controller import authentication_blueprint
-from app.controllers.health_check_controller import health_check_blueprint
-from app.controllers.customer_controller import customer_blueprint
+from app.controllers.site.customer_authentication_controller import customer_authentication_blueprint
+from app.controllers.site.health_check_controller import health_check_blueprint
+from app.controllers.site.customer_controller import customer_blueprint
 from app.domain.customer.customer import Customer
 
 
@@ -38,7 +38,7 @@ def create_app(environment="local", settings=None):
 
     # Register blueprints
     app.register_blueprint(health_check_blueprint)
-    app.register_blueprint(authentication_blueprint)
+    app.register_blueprint(customer_authentication_blueprint)
     app.register_blueprint(customer_blueprint)
 
     JWTManager(app)

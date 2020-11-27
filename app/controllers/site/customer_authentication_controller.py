@@ -1,17 +1,17 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token
 from app.domain.customer.customer_repository import CustomerRepository
-from app.domain.customer.customer_schema import AuthenticationInputSchema
+from app.domain.customer.customer_schema import CustomerAuthenticationInputSchema
 from app.domain.customer.customer_service import CustomerService
-from app.presentation.base_response_exception import NotFoundException, BadRequestException, UnauthorizedException
+from app.presentation.base_response_exception import BadRequestException
 
-authentication_blueprint = Blueprint('authentication', __name__, url_prefix='/api')
+customer_authentication_blueprint = Blueprint('authentication', __name__, url_prefix='/api')
 customer_service = CustomerService(repository=CustomerRepository())
 
 
-@authentication_blueprint.route('/auth/token', methods=['POST'])
+@customer_authentication_blueprint.route('/auth/token', methods=['POST'])
 def generate_token():
-    authentication_schema = AuthenticationInputSchema()
+    authentication_schema = CustomerAuthenticationInputSchema()
     data = request.get_json()
 
     errors = authentication_schema.validate(data)

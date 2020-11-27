@@ -7,7 +7,7 @@ from app.domain.customer.customer_repository import CustomerRepository
 from app.domain.customer.customer_schema import CustomerInputSchema, CustomerUpdateInputSchema, \
     ChangePasswordUpdateInputSchema
 from app.domain.customer.customer_service import CustomerService
-from app.presentation.base_response_exception import BadRequestException, UnauthorizedException
+from app.presentation.base_response_exception import BadRequestException
 
 customer_blueprint = Blueprint('customer', __name__, url_prefix='/api')
 customer_service = CustomerService(repository=CustomerRepository())

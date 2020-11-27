@@ -1,5 +1,3 @@
-from sqlalchemy import and_
-
 from app.domain.customer.customer import Customer
 from app.domain.interfaces.base_repository import BaseRepository
 

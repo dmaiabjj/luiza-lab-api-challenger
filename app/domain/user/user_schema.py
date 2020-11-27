@@ -1,22 +1,22 @@
 from marshmallow import Schema, fields
 
 
-class CustomerAuthenticationInputSchema(Schema):
+class UserAuthenticationInputSchema(Schema):
     email = fields.Email(required=True)
     password = fields.Str(required=True)
 
 
-class CustomerInputSchema(Schema):
+class UserInputSchema(Schema):
     name = fields.Str(required=True)
     email = fields.Email(required=True)
     password = fields.Str(required=True)
 
 
-class CustomerUpdateInputSchema(Schema):
+class UserUpdateInputSchema(Schema):
     name = fields.Str(required=True)
     email = fields.Email(required=True)
 
 
-class ChangePasswordUpdateInputSchema(Schema):
+class UserPasswordUpdateInputSchema(Schema):
     password = fields.Str(required=True)
     new_password = fields.Str(required=True)

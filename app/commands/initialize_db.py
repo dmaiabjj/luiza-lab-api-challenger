@@ -5,6 +5,7 @@ from sqlalchemy import and_
 from app import db
 from app.domain.customer.customer import Customer
 from app.domain.product.product import Product
+from app.domain.user.user import Role, User, UserRole, RoleCategory
 from app.domain.wishlist.wishlist import WishList
 
 
@@ -28,9 +29,23 @@ def create_customer():
     # Create all tables
     db.create_all()
 
+    # Add role
+    super_user = find_or_create_role(category=RoleCategory.SUPER_USER)
+    find_or_create_role(category=RoleCategory.CUSTOMER_EXPERIENCE)
+    find_or_create_role(category=RoleCategory.FINANCIAL)
+
+    # Add user
+    user = find_or_create_user(name='Luke Skywalker', email='luke@luizalabs.com.br',
+                               password='darthVaderIsMyFather')
+
+    db.session.commit()
+
+    # Add wishlist
+    find_or_create_user_role(user_id=user.id, role_id=super_user.id)
+
     # Add customer
-    customer = find_or_create_user(name='Luke Skywalker', email='luke@luizalabs.com.br',
-                                   password='darthVaderIsMyFather')
+    customer = find_or_create_customer(name='Anakin Skywalker', email='anakin@starwars.com.br',
+                                       password='iAmDarthVader')
     # Add product
     product = find_or_create_product(title="Sabre de Luz", brand="Jedi", image="", price=100, review_score=10)
 
@@ -43,19 +58,52 @@ def create_customer():
     db.session.commit()
 
 
+def find_or_create_role(category):
+    """ Find existing role or create new role """
+    role = Role.query.filter(Role.category == category).one_or_none()
+    if not role:
+        role = Role(name=category.name, category=category)
+
+        db.session.add(role)
+    return role
+
+
 def find_or_create_user(name, email, password):
-    """ Find existing user or create new customer """
-    user = Customer.query.filter(Customer.email == email).one_or_none()
+    """ Find existing user or create new user """
+    user = User.query.filter(User.email == email).one_or_none()
     if not user:
-        user = Customer(name=name, email=email,
-                        password=generate_password_hash(password))
+        user = User(name=name, email=email,
+                    password=generate_password_hash(password))
 
         db.session.add(user)
     return user
 
 
+def find_or_create_user_role(user_id, role_id):
+    """ Find existing user role or create new user role """
+    user_role = UserRole.query.filter(and_(UserRole.user_id == user_id,
+                                           UserRole.role_id == role_id)).one_or_none()
+    if not user_role:
+        user_role = UserRole(user_id=user_id, role_id=role_id)
+
+        db.session.add(user_role)
+
+    return user_role
+
+
+def find_or_create_customer(name, email, password):
+    """ Find existing customer or create new customer """
+    customer = Customer.query.filter(Customer.email == email).one_or_none()
+    if not customer:
+        customer = Customer(name=name, email=email,
+                        password=generate_password_hash(password))
+
+        db.session.add(customer)
+    return customer
+
+
 def find_or_create_product(title, brand, image, price, review_score):
-    """ Find existing user or create new customer """
+    """ Find existing product or create new product """
     product = Product.query.filter(Product.title == title).one_or_none()
     if not product:
         product = Product(title=title, brand=brand, image=image, price=price, review_score=review_score)
@@ -66,7 +114,7 @@ def find_or_create_product(title, brand, image, price, review_score):
 
 
 def find_or_create_wishlist(customer_id, product_id):
-    """ Find existing user or create new customer """
+    """ Find existing wishlist or create new wishlist """
     wishlist = WishList.query.filter(and_(WishList.customer_id == customer_id,
                                           WishList.product_id == product_id)).one_or_none()
     if not wishlist:
