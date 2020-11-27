@@ -5,11 +5,11 @@ from app.domain.customer.customer_schema import CustomerAuthenticationInputSchem
 from app.domain.customer.customer_service import CustomerService
 from app.presentation.base_response_exception import BadRequestException
 
-site_authentication_blueprint = Blueprint('site_authentication', __name__, url_prefix='/api')
+authentication_site_blueprint = Blueprint('authentication_site', __name__, url_prefix='/api')
 customer_service = CustomerService(repository=CustomerRepository())
 
 
-@site_authentication_blueprint.route('/auth/token', methods=['POST'])
+@authentication_site_blueprint.route('/auth/token', methods=['POST'])
 def generate_token():
     authentication_schema = CustomerAuthenticationInputSchema()
     data = request.get_json()

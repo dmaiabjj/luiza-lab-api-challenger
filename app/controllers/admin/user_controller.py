@@ -3,13 +3,14 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 from werkzeug.security import generate_password_hash
 
 from app import blacklist
+from app.controllers.admin import admin_required
 from app.domain.user.user import User, UserRole
 from app.domain.user.user_repository import UserRepository
 from app.domain.user.user_schema import UserInputSchema, UserUpdateInputSchema, UserChangePasswordUpdateInputSchema
 from app.domain.user.user_service import UserService
 from app.presentation.base_response_exception import BadRequestException
 
-user_blueprint = Blueprint('user', __name__, url_prefix='/admin/api')
+user_admin_blueprint = Blueprint('user_admin', __name__, url_prefix='/admin/api')
 user_service = UserService(repository=UserRepository())
 
 
@@ -17,7 +18,7 @@ def logout(jti):
     blacklist.add(jti)
 
 
-@user_blueprint.route('/user', methods=['POST'])
+@user_admin_blueprint.route('/user', methods=['POST'])
 def add():
     user_schema = UserInputSchema()
     data = request.get_json()
@@ -36,8 +37,9 @@ def add():
     return jsonify(user)
 
 
-@user_blueprint.route('/user', methods=['PUT'])
+@user_admin_blueprint.route('/user', methods=['PUT'])
 @jwt_required
+@admin_required
 def update():
     current_user = get_jwt_identity()
     user_schema = UserUpdateInputSchema()
@@ -55,8 +57,9 @@ def update():
     return jsonify(user)
 
 
-@user_blueprint.route('/user', methods=['DELETE'])
+@user_admin_blueprint.route('/user', methods=['DELETE'])
 @jwt_required
+@admin_required
 def delete():
     current_user = get_jwt_identity()
     user_service.delete(id=current_user['id'])
@@ -65,8 +68,9 @@ def delete():
     return {}, 200
 
 
-@user_blueprint.route('/user/password', methods=['PUT'])
+@user_admin_blueprint.route('/user/password', methods=['PUT'])
 @jwt_required
+@admin_required
 def change_password():
     current_user = get_jwt_identity()
     change_password_schema = UserChangePasswordUpdateInputSchema()
@@ -84,24 +88,27 @@ def change_password():
     return {}, 200
 
 
-@user_blueprint.route('/user/<id>/', methods=['GET'])
+@user_admin_blueprint.route('/user/<id>/', methods=['GET'])
 @jwt_required
+@admin_required
 def get_by_id(id):
     user = user_service.find_by_id(id=int(id))
     return jsonify(user)
 
 
-@user_blueprint.route('/user/email/<email>/', methods=['GET'])
+@user_admin_blueprint.route('/user/email/<email>/', methods=['GET'])
 @jwt_required
+@admin_required
 def get_by_email(email):
     user = user_service.find_by_email(email=email)
     return jsonify(user)
 
 
-@user_blueprint.route('/user/', methods=['GET'])
-@user_blueprint.route('/user/<offset>/', methods=['GET'])
-@user_blueprint.route('/user/<offset>/<limit>', methods=['GET'])
+@user_admin_blueprint.route('/user/', methods=['GET'])
+@user_admin_blueprint.route('/user/<offset>/', methods=['GET'])
+@user_admin_blueprint.route('/user/<offset>/<limit>', methods=['GET'])
 @jwt_required
+@admin_required
 def get_all(offset=1, limit=10):
     users = user_service.get_all_paginated(offset=int(offset), limit=int(limit))
     return jsonify(users)

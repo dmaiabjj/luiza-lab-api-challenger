@@ -10,7 +10,7 @@ from app.domain.customer.customer_schema import CustomerInputSchema, CustomerUpd
 from app.domain.customer.customer_service import CustomerService
 from app.presentation.base_response_exception import BadRequestException
 
-customer_blueprint = Blueprint('customer', __name__, url_prefix='/api')
+customer_site_blueprint = Blueprint('customer_site', __name__, url_prefix='/api')
 customer_service = CustomerService(repository=CustomerRepository())
 
 
@@ -18,7 +18,7 @@ def logout(jti):
     blacklist.add(jti)
 
 
-@customer_blueprint.route('/customer', methods=['POST'])
+@customer_site_blueprint.route('/customer', methods=['POST'])
 def add():
     customer_schema = CustomerInputSchema()
     data = request.get_json()
@@ -36,7 +36,7 @@ def add():
     return jsonify(customer)
 
 
-@customer_blueprint.route('/customer', methods=['PUT'])
+@customer_site_blueprint.route('/customer', methods=['PUT'])
 @jwt_required
 def update():
     current_user = get_jwt_identity()
@@ -54,7 +54,7 @@ def update():
     return jsonify(customer)
 
 
-@customer_blueprint.route('/customer', methods=['DELETE'])
+@customer_site_blueprint.route('/customer', methods=['DELETE'])
 @jwt_required
 def delete():
     current_user = get_jwt_identity()
@@ -63,7 +63,7 @@ def delete():
     return {}, 200
 
 
-@customer_blueprint.route('/customer/password', methods=['PUT'])
+@customer_site_blueprint.route('/customer/password', methods=['PUT'])
 @jwt_required
 def change_password():
     current_user = get_jwt_identity()
@@ -82,23 +82,23 @@ def change_password():
     return {}, 200
 
 
-@customer_blueprint.route('/customer/<id>/', methods=['GET'])
+@customer_site_blueprint.route('/customer/<id>/', methods=['GET'])
 @jwt_required
 def get_by_id(id):
     customer = customer_service.find_by_id(id=int(id))
     return jsonify(customer)
 
 
-@customer_blueprint.route('/customer/email/<email>/', methods=['GET'])
+@customer_site_blueprint.route('/customer/email/<email>/', methods=['GET'])
 @jwt_required
 def get_by_email(email):
     customer = customer_service.find_by_email(email=email)
     return jsonify(customer)
 
 
-@customer_blueprint.route('/customer/', methods=['GET'])
-@customer_blueprint.route('/customer/<offset>/', methods=['GET'])
-@customer_blueprint.route('/customer/<offset>/<limit>', methods=['GET'])
+@customer_site_blueprint.route('/customer/', methods=['GET'])
+@customer_site_blueprint.route('/customer/<offset>/', methods=['GET'])
+@customer_site_blueprint.route('/customer/<offset>/<limit>', methods=['GET'])
 @jwt_required
 def get_all(offset=1, limit=10):
     customers = customer_service.get_all_paginated(offset=int(offset), limit=int(limit))

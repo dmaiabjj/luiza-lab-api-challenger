@@ -9,7 +9,7 @@ from app.domain import BaseModel
 
 
 class RoleCategory(enum.Enum):
-    BASIC = 1
+    ADMIN = 1
     SUPER_USER = 2
     CUSTOMER_EXPERIENCE = 3
     FINANCIAL = 4
@@ -21,7 +21,7 @@ class RoleCategory(enum.Enum):
     @classmethod
     def __get_values(cls):
         return {
-            'BASIC': RoleCategory.BASIC,
+            'ADMIN': RoleCategory.ADMIN,
             'SUPER_USER': RoleCategory.SUPER_USER,
             'CUSTOMER_EXPERIENCE': RoleCategory.CUSTOMER_EXPERIENCE,
             'FINANCIAL': RoleCategory.FINANCIAL
@@ -35,7 +35,7 @@ class UserRole(db.Model, BaseModel):
     serialize_rules = ('-deleted_date', '-updated_date', '-user_id', '-id', '-created_date')
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    category = db.Column(db.Enum(RoleCategory), default=RoleCategory.SUPER_USER)
+    category = db.Column(db.Enum(RoleCategory), default=RoleCategory.ADMIN)
 
 
 # Define the User Domain

@@ -10,12 +10,16 @@ db = SQLAlchemy()
 migrate = Migrate()
 blacklist = set()
 
-from app.controllers.site.site_authentication_controller import site_authentication_blueprint
-from app.controllers.admin.admin_authentication_controller import admin_authentication_blueprint
-
+# Admin blueprint
+from app.controllers.admin.authentication_controller import authentication_admin_blueprint
+from app.controllers.admin.user_controller import user_admin_blueprint
+from app.controllers.admin.customer_controller import customer_admin_blueprint
+# Site blueprint
+from app.controllers.site.authentication_controller import authentication_site_blueprint
+from app.controllers.site.customer_controller import customer_site_blueprint
+# General blueprint
 from app.controllers.health_check_controller import health_check_blueprint
-from app.controllers.site.customer_controller import customer_blueprint
-from app.controllers.admin.user_controller import user_blueprint
+
 from app.domain.customer.customer import Customer
 
 
@@ -42,10 +46,13 @@ def create_app(environment="local", settings=None):
 
     # Register blueprints
     app.register_blueprint(health_check_blueprint)
-    app.register_blueprint(user_blueprint)
-    app.register_blueprint(customer_blueprint)
-    app.register_blueprint(site_authentication_blueprint)
-    app.register_blueprint(admin_authentication_blueprint)
+    app.register_blueprint(authentication_admin_blueprint)
+    app.register_blueprint(user_admin_blueprint)
+    app.register_blueprint(customer_admin_blueprint)
+
+    app.register_blueprint(authentication_site_blueprint)
+    app.register_blueprint(customer_site_blueprint)
+
 
     jwt = JWTManager(app)
 

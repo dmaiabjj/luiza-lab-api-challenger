@@ -36,8 +36,8 @@ def create_customer():
     db.session.commit()
 
     # Add user role
+    find_or_create_user_role(user_id=user.id, category=RoleCategory.ADMIN)
     find_or_create_user_role(user_id=user.id, category=RoleCategory.SUPER_USER)
-    find_or_create_user_role(user_id=user.id, category=RoleCategory.CUSTOMER_EXPERIENCE)
 
     # Add customer
     customer = find_or_create_customer(name='Anakin Skywalker', email='anakin@starwars.com.br',

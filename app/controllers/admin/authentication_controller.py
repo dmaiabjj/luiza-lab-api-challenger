@@ -5,11 +5,11 @@ from app.domain.user.user_repository import UserRepository
 from app.domain.user.user_service import UserService
 from app.presentation.base_response_exception import BadRequestException
 
-admin_authentication_blueprint = Blueprint('admin_authentication', __name__, url_prefix='/admin/api')
+authentication_admin_blueprint = Blueprint('authentication_admin', __name__, url_prefix='/admin/api')
 user_service = UserService(repository=UserRepository())
 
 
-@admin_authentication_blueprint.route('/auth/token', methods=['POST'])
+@authentication_admin_blueprint.route('/auth/token', methods=['POST'])
 def generate_token():
     authentication_schema = UserAuthenticationInputSchema()
     data = request.get_json()
