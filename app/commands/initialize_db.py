@@ -4,7 +4,6 @@ from sqlalchemy import and_
 
 from app import db
 from app.domain.customer.customer import Customer
-from app.domain.product.product import Product
 from app.domain.user.user import User, UserRole, RoleCategory
 from app.domain.wishlist.wishlist import WishList
 
@@ -42,13 +41,10 @@ def create_customer():
     # Add customer
     customer = find_or_create_customer(name='Anakin Skywalker', email='anakin@starwars.com.br',
                                        password='iAmDarthVader')
-    # Add product
-    product = find_or_create_product(title="Sabre de Luz", brand="Jedi", image="", price=100, review_score=10)
-
     db.session.commit()
 
     # Add wishlist
-    find_or_create_wishlist(customer_id=customer.id, product_id=product.id)
+    find_or_create_wishlist(customer_id=customer.id, product_id="1bf0f365-fbdd-4e21-9786-da459d78dd1f")
 
     # Save to DB
     db.session.commit()
@@ -82,21 +78,10 @@ def find_or_create_customer(name, email, password):
     customer = Customer.query.filter(Customer.email == email).one_or_none()
     if not customer:
         customer = Customer(name=name, email=email,
-                        password=generate_password_hash(password))
+                            password=generate_password_hash(password))
 
         db.session.add(customer)
     return customer
-
-
-def find_or_create_product(title, brand, image, price, review_score):
-    """ Find existing product or create new product """
-    product = Product.query.filter(Product.title == title).one_or_none()
-    if not product:
-        product = Product(title=title, brand=brand, image=image, price=price, review_score=review_score)
-
-        db.session.add(product)
-
-    return product
 
 
 def find_or_create_wishlist(customer_id, product_id):

@@ -21,6 +21,12 @@ build/dependencies/lib/safety-check:
 db/initialize:
 	python manage.py init_db
 
+local/clean:
+	docker-compose stop && docker-compose rm -vf
+
+local/up: local/clean
+	docker-compose up -d
+
 run:
 	python manage.py runserver
 

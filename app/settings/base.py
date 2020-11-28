@@ -26,3 +26,4 @@ USER_ALLOW_LOGIN_WITHOUT_CONFIRMED_EMAIL = False
 JWT_SECRET_KEY = "luiza-labs-super-secret"
 JWT_BLACKLIST_ENABLED = True
 JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
+JWT_DEFAULT_REALM = 'Login Required'

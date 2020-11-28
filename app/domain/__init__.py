@@ -1,9 +1,9 @@
 import enum
 from datetime import datetime
+
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.inspection import inspect as sql_alchemy_inspect
 from app import db
-
 
 PRIMITIVE = (int, str, bool, float)
 

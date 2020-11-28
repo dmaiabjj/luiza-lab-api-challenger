@@ -1,8 +1,8 @@
-from app.domain.interfaces.base_repository import BaseRepository
 from app.domain.user.user import User
+from app.infrastructure.repository.data_base_repository import DataBaseRepository
 
 
-class UserRepository(BaseRepository):
+class UserRepository(DataBaseRepository):
     def __init__(self):
         super().__init__(clazz=User)
 
