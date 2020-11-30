@@ -133,120 +133,481 @@ Para criar uma migration:
 
 #### Customer
 
-**URL**: POST - /api/auth/customer/token
+**URL**: METHOD POST - /api/auth/customer/token
 <br />
 **Request**:
 <br />
-`{ "email": "anakin@starwars.com.br", "password": "iAmDarthVader" }`
+```json
+{ 
+  "email": "anakin@starwars.com.br", 
+  "password": "iAmDarthVader" 
+}
+
+```
 <br />
 
 **Response**:
+```json
+{
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDY3NTM4MzgsIm5iZiI6MTYwNjc1MzgzOCwianRpIjoiZTRlMGFjNDAtNjMwYi00ZTZlLTgwMzktYjJjMTRiYmEzZDgxIiwiZXhwIjoxNjA2NzU0NzM4LCJpZGVudGl0eSI6eyJpZCI6MSwidXBkYXRlZF9kYXRlIjpudWxsLCJlbWFpbCI6Imx1a2VAbHVpemFsYWJzLmNvbS5iciIsIm5hbWUiOiJMdWtlIFNreXdhbGtlciIsInJvbGVzIjpbeyJjYXRlZ29yeSI6IkFETUlOIn0seyJjYXRlZ29yeSI6IlNVUEVSX1VTRVIifV0sImNyZWF0ZWRfZGF0ZSI6IjIwMjAtMTEtMzAgMTY6MzA6MzUiLCJkZWxldGVkX2RhdGUiOm51bGx9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MiLCJ1c2VyX2NsYWltcyI6eyJyb2xlcyI6WyJBRE1JTiIsIlNVUEVSX1VTRVIiXX19.XHogF2h605mapxX557974DhWI_uoBQhiATeb2n22Od0"
+}
 
-`{ "access_token": "XHogF2h605mapxX557974DhWI_uoBQhiATeb2n22Od0" }`
+```
+<br />
 
 #### User
 
-**URL**: POST - /api/auth/customer/token
+**URL**: METHOD POST - /api/auth/customer/token
 <br />
 **Request**:
 <br />
-`{ "email": "luke@luizalabs.com.br", "password": "darthVaderIsMyFather" }`
+```json
+{ 
+  "email": "luke@luizalabs.com.br", 
+  "password": "darthVaderIsMyFather" 
+}
+```
 <br />
 
 **Response**:
+```json
+{
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDY3NTM4MzgsIm5iZiI6MTYwNjc1MzgzOCwianRpIjoiZTRlMGFjNDAtNjMwYi00ZTZlLTgwMzktYjJjMTRiYmEzZDgxIiwiZXhwIjoxNjA2NzU0NzM4LCJpZGVudGl0eSI6eyJpZCI6MSwidXBkYXRlZF9kYXRlIjpudWxsLCJlbWFpbCI6Imx1a2VAbHVpemFsYWJzLmNvbS5iciIsIm5hbWUiOiJMdWtlIFNreXdhbGtlciIsInJvbGVzIjpbeyJjYXRlZ29yeSI6IkFETUlOIn0seyJjYXRlZ29yeSI6IlNVUEVSX1VTRVIifV0sImNyZWF0ZWRfZGF0ZSI6IjIwMjAtMTEtMzAgMTY6MzA6MzUiLCJkZWxldGVkX2RhdGUiOm51bGx9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MiLCJ1c2VyX2NsYWltcyI6eyJyb2xlcyI6WyJBRE1JTiIsIlNVUEVSX1VTRVIiXX19.XHogF2h605mapxX557974DhWI_uoBQhiATeb2n22Od0"
+}
 
-`{ "access_token": "XHogF2h605mapxX557974DhWI_uoBQhiATeb2n22Od0" }`
-
+```
 ### Customer
 
 #### Add
 
-**URL**: POST - /api/customer
+**URL**: METHOD POST - /api/customer
 <br />
 **Request**:
 <br />
-`{ "name": "Leia Organa", "email": "leia@starwars.com.br", "password": "youAreMyOnlyHope" }`
+```json
+{
+  "name": "Leia Organa",
+  "email": "leia@starwars.com.br",
+  "password": "youAreMyOnlyHope"
+}
+
+```
 <br />
 
 **Response**:
+```json
+{
+  "created_date": "2020-11-28 22:45:53",
+  "deleted_date": null,
+  "email": "leia@starwars.com.br",
+  "id": 2,
+  "name": "Leia Organa",
+  "updated_date": null
+}
 
-`{ "created_date": "2020-11-28 22:45:53", "deleted_date": null, "email": "leia@starwars.com.br", "id": 2, "name": "Leia Organa", "updated_date": null }`
+```
 
 #### Update
 
 **HEADER** : Authorization Bearer CUSTOMER_AUTHORIZATION_TOKEN
-**URL**: PUT - /api/customer
+<br />
+**URL**: METHOD PUT - /api/customer
 <br />
 **Request**:
 <br />
-`{ "name": "Leia B", "email": "leia@stawars.com.br" }`
+```json
+{
+  "name": "Leia B",
+  "email": "leia@stawars.com.br"
+}
+
+```
 <br />
 
 **Response**:
+```json
+{
+  "created_date": "2020-11-28 19:50:56",
+  "deleted_date": null,
+  "email": "leia@stawars.com.br",
+  "id": 1,
+  "name": "Leia B",
+  "updated_date": "2020-11-28 20:01:12"
+}
 
-`{ "created_date": "2020-11-28 19:50:56", "deleted_date": null, "email": "leia@stawars.com.br", "id": 1, "name": "Leia B", "updated_date": "2020-11-28 20:01:12" }`
-
-#### Update by SuperUser
+```
+#### Update - SuperUser
 
 **HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
-**URL**: PUT - /api/customer/<user_id>
+<br />
+**URL**: METHOD PUT - /api/customer/[user_id]
 <br />
 **Request**:
 <br />
-`{ "name": "Leia B", "email": "leia@stawars.com.br" }`
+```json
+{
+  "name": "Leia B",
+  "email": "leia@stawars.com.br"
+}
+
+```
 <br />
 
 **Response**:
+```json
+{
+  "created_date": "2020-11-28 19:50:56",
+  "deleted_date": null,
+  "email": "leia@stawars.com.br",
+  "id": 1,
+  "name": "Leia B",
+  "updated_date": "2020-11-28 20:01:12"
+}
 
-`{ "created_date": "2020-11-28 19:50:56", "deleted_date": null, "email": "leia@stawars.com.br", "id": 1, "name": "Leia B", "updated_date": "2020-11-28 20:01:12" }`
+```
+
+#### Change Password
+
+**HEADER** : Authorization Bearer CUSTOMER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD PUT - /api/customer/password
+<br />
+**Request**:
+<br />
+```json
+{
+  "password": "iamDarthVader",
+  "new_password": "iamVader"
+}
+
+```
+<br />
+
+**Response**:
+```json
+{}
+
+```
 
 #### Delete
 
 **HEADER** : Authorization Bearer CUSTOMER_AUTHORIZATION_TOKEN
-**URL**: DELETE - /api/customer
 <br />
-**Request**:
-{<br />
-`{}`
-<br />}
-
+**URL**: METHOD DELETE - /api/customer
+<br />
 **Response**:
+```json
+{}
+```
 
-`{}`
-
-#### Delete by SuperUser
+#### Delete - SuperUser
 
 **HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
-**URL**: DELETE - /api/customer/<user_id>
 <br />
-**Request**:
+**URL**: METHOD DELETE - /api/customer/[user_id]
 <br />
-`{}`
-<br />
-
 **Response**:
-
-`{}`
+```json
+{}
+```
 
 #### Get
 
 **HEADER** : Authorization Bearer CUSTOMER_AUTHORIZATION_TOKEN
-**URL**: GET - /api/customer
+<br />
+**URL**: METHOD GET - /api/customer
 <br />
 **Response**:
+```json
+{
+  "created_date": "2020-11-28 19:50:56",
+  "deleted_date": null,
+  "email": "anakin@starwars.com.br",
+  "id": 1,
+  "name": "Anakin Skywalker",
+  "updated_date": null
+}
+```
+#### Get Customer by Email - SuperUser
 
-`{ "created_date": "2020-11-28 19:50:56", "deleted_date": null, "email": "anakin@starwars.com.br", "id": 1, "name": "Anakin Skywalker", "updated_date": null }`
+**HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD GET - /api/customer/email/[email]
+<br />
+**Response**:
+```json
+{
+  "created_date": "2020-11-28 20:00:02",
+  "deleted_date": null,
+  "email": "leia@starwars.com.br",
+  "id": 2,
+  "name": "Leia Organa",
+  "updated_date": null
+}
+```
+
+#### Get Customer by ID - SuperUser
+
+**HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD GET - /api/customer/[id]
+<br />
+**Response**:
+```json
+{
+  "created_date": "2020-11-28 20:00:02",
+  "deleted_date": null,
+  "email": "leia@starwars.com.br",
+  "id": 2,
+  "name": "Leia Organa",
+  "updated_date": null
+}
+```
+
+#### Get Customers - SuperUser
+
+**HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD GET - /api/customer/[offset]/[limit]
+<br />
+**Response**:
+```json
+[{
+  "created_date": "2020-11-28 20:00:02",
+  "deleted_date": null,
+  "email": "leia@starwars.com.br",
+  "id": 2,
+  "name": "Leia Organa",
+  "updated_date": null
+}]
+```
+
+### User
+#### Add
+**HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD POST - /api/user
+<br />
+**Request**:
+<br />
+```json
+{
+	"name": "Anakin Skywalker",
+	"email": "ana@luizalabs.com.br",
+	"password": "iamDarthVader",
+	"roles" : ["ADMIN"]
+}
+
+```
+<br />
+
+**Response**:
+```json
+{
+  "created_date": "2020-11-28 22:46:06",
+  "deleted_date": null,
+  "email": "ana@luizalabs.com.br",
+  "id": 2,
+  "name": "Anakin Skywalker",
+  "roles": [
+    {
+      "category": "ADMIN"
+    }
+  ],
+  "updated_date": null
+}
+
+```
+
+#### Update
+
+**HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD PUT - /api/user
+<br />
+**Request**:
+<br />
+```json
+{
+	"name": "Darth Vader",
+	"email": "darth@luizalabs.com.br",
+	"roles" : ["CUSTOMER_EXPERIENCE"]
+}
+
+```
+<br />
+
+**Response**:
+```json
+{
+  "created_date": "2020-11-28 18:13:14",
+  "deleted_date": null,
+  "email": "darth@luizalabs.com.br",
+  "id": 1,
+  "name": "Darth Vader",
+  "roles": [
+    {
+      "category": "ADMIN"
+    },
+    {
+      "category": "CUSTOMER_EXPERIENCE"
+    },
+    {
+      "category": "SUPER_USER"
+    }
+  ],
+  "updated_date": "2020-11-28 18:25:11"
+}
+
+```
+
+#### Change Password
+
+**HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD PUT - /api/user/password
+<br />
+**Request**:
+<br />
+```json
+{
+  "password": "iamDarthVader",
+  "new_password": "iamVader"
+}
+
+```
+<br />
+
+**Response**:
+```json
+{}
+
+```
+
+#### Delete
+
+**HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD DELETE - /api/user
+<br />
+**Response**:
+```json
+{}
+```
+
+
+#### Get
+
+**HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD GET - /api/user
+<br />
+**Response**:
+```json
+{
+  "created_date": "2020-11-28 18:13:14",
+  "deleted_date": null,
+  "email": "darth@luizalabs.com.br",
+  "id": 1,
+  "name": "Darth Vader",
+  "roles": [
+    {
+      "category": "ADMIN"
+    },
+    {
+      "category": "CUSTOMER_EXPERIENCE"
+    },
+    {
+      "category": "SUPER_USER"
+    }
+  ],
+  "updated_date": "2020-11-28 18:25:11"
+}
+```
 
 #### Get User by Email - SuperUser
 
 **HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
-**URL**: DELETE - /api/customer/email/<email>
 <br />
-**Request**:
+**URL**: METHOD GET - /api/user/email/[email]
 <br />
-`{}`
-<br />
-
 **Response**:
+```json
+{
+  "created_date": "2020-11-28 18:24:41",
+  "deleted_date": null,
+  "email": "ana@luizalabs.com.br",
+  "id": 2,
+  "name": "Anakin Skywalker",
+  "roles": [
+    {
+      "category": "ADMIN"
+    }
+  ],
+  "updated_date": null
+}
+```
 
-`{ "created_date": "2020-11-28 20:00:02", "deleted_date": null, "email": "leia@starwars.com.br", "id": 2, "name": "Leia Organa", "updated_date": null }`
+#### Get User by ID - SuperUser
+
+**HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD GET - /api/user/[id]
+<br />
+**Response**:
+```json
+{
+  "created_date": "2020-11-28 18:24:41",
+  "deleted_date": null,
+  "email": "ana@luizalabs.com.br",
+  "id": 2,
+  "name": "Anakin Skywalker",
+  "roles": [
+    {
+      "category": "ADMIN"
+    }
+  ],
+  "updated_date": null
+}
+```
+
+#### Get Users - SuperUser
+
+**HEADER** : Authorization Bearer USER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD GET - /api/user/[offset]/[limit]
+<br />
+**Response**:
+```json
+[[
+  {
+    "created_date": "2020-11-28 18:13:14",
+    "deleted_date": null,
+    "email": "luke@luizalabs.com.br",
+    "id": 1,
+    "name": "Luke Skywalker",
+    "roles": [
+      {
+        "category": "ADMIN"
+      },
+      {
+        "category": "SUPER_USER"
+      }
+    ],
+    "updated_date": null
+  },
+  {
+    "created_date": "2020-11-28 18:24:41",
+    "deleted_date": null,
+    "email": "ana@luizalabs.com.br",
+    "id": 2,
+    "name": "Anakin Skywalker",
+    "roles": [
+      {
+        "category": "ADMIN"
+      }
+    ],
+    "updated_date": null
+  }
+]]
+```
