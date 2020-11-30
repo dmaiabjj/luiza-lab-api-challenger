@@ -28,9 +28,9 @@ def add_wishlist(product_id):
 def delete_wishlist(product_id):
     current_user = get_jwt_identity()
     customer_id = current_user['id']
-    wishlist = wishlist_service.delete(product_id=product_id, customer_id=customer_id)
+    wishlist_service.delete(product_id=product_id, customer_id=customer_id)
 
-    return jsonify(wishlist)
+    return {}, 200
 
 
 @wishlist_blueprint.route('/wishlist/', endpoint='get-all-wishlist', methods=['GET'])

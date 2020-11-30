@@ -611,3 +611,91 @@ Para criar uma migration:
   }
 ]]
 ```
+### Product
+#### Get by id
+**HEADER** : Authorization Bearer CUSTOMER_AUTHORIZATION_TOKEN OR USER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD GET - /api/product/[id]
+<br />
+**Response**:
+```json
+{
+  "brand": "burigotto",
+  "id": "ddeb989e-53c4-e68b-aa93-6e43afddb797",
+  "image": "http://challenge-api.luizalabs.com/images/ddeb989e-53c4-e68b-aa93-6e43afddb797.jpg",
+  "price": 704.8,
+  "title": "Cadeira para Auto Burigotto Matrix p/ Crianças"
+}
+```
+
+### Product
+#### Get products
+**HEADER** : Authorization Bearer CUSTOMER_AUTHORIZATION_TOKEN OR USER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD GET - /api/product/[page]
+<br />
+**Response**:
+```json
+{
+  "meta": {
+    "page_number": 2,
+    "page_size": 100
+  },
+  "products": [
+    {
+      "brand": "burigotto",
+      "id": "ddeb989e-53c4-e68b-aa93-6e43afddb797",
+      "image": "http://challenge-api.luizalabs.com/images/ddeb989e-53c4-e68b-aa93-6e43afddb797.jpg",
+      "price": 704.8,
+      "title": "Cadeira para Auto Burigotto Matrix p/ Crianças"
+    },
+    {
+      "brand": "elg",
+      "id": "de2911eb-ce5c-e783-1ca5-82d0ccd4e3d8",
+      "image": "http://challenge-api.luizalabs.com/images/de2911eb-ce5c-e783-1ca5-82d0ccd4e3d8.jpg",
+      "price": 39.9,
+      "title": "Película Protetora para Samsung Galaxy S6"
+    }
+]
+}
+```
+
+### WishList
+#### Add
+**HEADER** : Authorization Bearer CUSTOMER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD POST - /api/wishlist/product/[product_id]
+<br />
+**Response**:
+```json
+{
+  "id": 2,
+  "product_id": "958ec015-cfcf-258d-c6df-1721de0ab6ea"
+}
+```
+
+#### Delete
+**HEADER** : Authorization Bearer CUSTOMER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD DELETE - /api/wishlist/product/[product_id]
+<br />
+**Response**:
+```json
+{
+  "id": 2,
+  "product_id": "958ec015-cfcf-258d-c6df-1721de0ab6ea"
+}
+```
+#### Get Wishlist
+**HEADER** : Authorization Bearer CUSTOMER_AUTHORIZATION_TOKEN
+<br />
+**URL**: METHOD GET - /api/wishlist/[offset]/[limit]
+<br />
+**Response**:
+```json
+[{
+  "id": 2,
+  "product_id": "958ec015-cfcf-258d-c6df-1721de0ab6ea"
+}]
+```
+
