@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from app.domain.product.product_service import ProductService
@@ -37,6 +37,8 @@ def delete_wishlist(product_id):
 @wishlist_blueprint.route('/wishlist/<int:offset>/', endpoint='get-all-wishlist', methods=['GET'])
 @wishlist_blueprint.route('/wishlist/<int:offset>/<int:limit>', endpoint='get-all-wishlist', methods=['GET'])
 @jwt_required
-def get_all_users(offset=1, limit=10):
-    users = wishlist_service.get_all_paginated(offset=offset, limit=limit)
+def get_wishlist(offset=1, limit=10):
+    current_user = get_jwt_identity()
+    customer_id = current_user['id']
+    users = wishlist_service.get_all_paginated(customer_id=customer_id, offset=offset, limit=limit)
     return jsonify(users)

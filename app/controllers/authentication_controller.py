@@ -14,7 +14,7 @@ user_service = UserService(repository=UserRepository())
 customer_service = CustomerService(repository=CustomerRepository())
 
 
-@authentication_blueprint.route('/auth/user/token', endpoint='generate-user', methods=['POST'])
+@authentication_blueprint.route('/auth/user/token', endpoint='generate_user_token', methods=['POST'])
 def generate_user_token():
     authentication_schema = UserAuthenticationInputSchema()
     data = request.get_json()
@@ -33,7 +33,7 @@ def generate_user_token():
     return jsonify(access_token=access_token)
 
 
-@authentication_blueprint.route('/auth/customer/token', endpoint='generate-customer', methods=['POST'])
+@authentication_blueprint.route('/auth/customer/token', endpoint='generate_customer_token', methods=['POST'])
 def generate_customer_token():
     authentication_schema = CustomerAuthenticationInputSchema()
     data = request.get_json()

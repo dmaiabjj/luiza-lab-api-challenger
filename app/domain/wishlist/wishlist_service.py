@@ -27,6 +27,6 @@ class WishListService:
 
         self.__repository.delete(wishlist)
 
-    def get_all_paginated(self, offset=1, limit=10):
-        wishlist = self.__repository.get_all_paginated(offset=offset - 1, limit=limit)
+    def get_all_paginated(self, customer_id, offset=1, limit=10):
+        wishlist = self.__repository.get_all_paginated_by_id(customer_id=customer_id, offset=offset - 1, limit=limit)
         return list(map(lambda item: item.to_dict(), wishlist))

@@ -1,9 +1,9 @@
 from app import db
-from app.domain import BaseModel
+from app.domain import BaseModel, Base
 
 
 # Define the WishList Domain
-class WishList(db.Model, BaseModel):
+class WishList(db.Model, Base, BaseModel):
     __tablename__ = 'wish_list'
     __table_args__ = (db.UniqueConstraint('customer_id', 'product_id', name='_customer_id_product_id'),)
     serialize_rules = ('-customer_id', '-deleted_date', '-updated_date', '-created_date',)

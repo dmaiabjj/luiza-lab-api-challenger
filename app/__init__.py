@@ -20,8 +20,7 @@ from app.controllers.health_check_controller import health_check_blueprint
 from app.domain.customer.customer import Customer
 
 
-def create_app(environment="local", settings=None):
-    settings = settings or {}
+def create_app(extra_config_settings={}):
 
     """Create a Flask app.
     """
@@ -30,10 +29,9 @@ def create_app(environment="local", settings=None):
 
     # Load common settings from 'core/settings/base.py' file
     app.config.from_object('app.settings.base')
-    # Load local settings from 'core/settings/local_settings.py'
-    app.config.from_object(f'app.settings.{environment}_setting')
+    app.config.from_object(f'app.settings.local_setting')
     # Load extra config settings from 'settings' param
-    app.config.update(settings)
+    app.config.update(extra_config_settings)
 
     # Setup Flask-SQLAlchemy
     db.init_app(app)

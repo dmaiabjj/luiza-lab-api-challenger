@@ -14,13 +14,12 @@ db_host = os.getenv("DB_HOST")
 db_port = os.getenv("DB_PORT")
 db_name = os.getenv("DB_NAME")
 database_url = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(db_user,
-                                                        db_password,
-                                                        db_host,
-                                                        db_port,
-                                                        db_name)
+                                                       db_password,
+                                                       db_host,
+                                                       db_port,
+                                                       db_name)
 
 # SQLAlchemy Settings
-# SQLALCHEMY_DATABASE_URI = 'sqlite:///../core.sqlite'
 SQLALCHEMY_DATABASE_URI = database_url
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SESSION_TYPE = 'sqlalchemy'

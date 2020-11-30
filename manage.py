@@ -6,7 +6,7 @@ from app.commands import InitDbCommand
 manager = Manager(create_app)
 
 
-manager.add_command('migrate', MigrateCommand)
+manager.add_command('db', MigrateCommand)
 manager.add_command('init_db', InitDbCommand)
 
 if __name__ == "__main__":

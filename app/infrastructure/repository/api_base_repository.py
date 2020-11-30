@@ -8,7 +8,7 @@ class APIRepository:
         self._base_url = base_url
 
     def __do_get(self, url):
-        return requests.get(url=self._base_url+url, verify=False)
+        return requests.get(url=self._base_url + url, verify=False)
 
     @abc.abstractmethod
     def parser(self, response):

@@ -14,8 +14,7 @@ class UserInputSchema(Schema):
     password = fields.Str(required=True)
 
     roles = fields.List(fields.String(
-        validate=validate.OneOf(choices=[r.name for r in RoleCategory])
-        , required=True), required=False)
+        validate=validate.OneOf(choices=[r.name for r in RoleCategory]), required=True), required=False)
 
 
 class UserUpdateInputSchema(Schema):
@@ -23,8 +22,7 @@ class UserUpdateInputSchema(Schema):
     email = fields.Email(required=True)
 
     roles = fields.List(fields.String(
-        validate=validate.OneOf(choices=[r.name for r in RoleCategory])
-        , required=True), required=False)
+        validate=validate.OneOf(choices=[r.name for r in RoleCategory]), required=True), required=False)
 
 
 class UserChangePasswordUpdateInputSchema(Schema):

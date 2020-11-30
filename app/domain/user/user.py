@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 from werkzeug.security import check_password_hash
 
 from app import db
-from app.domain import BaseModel
+from app.domain import BaseModel, Base
 
 
 class RoleCategory(enum.Enum):
@@ -29,7 +29,7 @@ class RoleCategory(enum.Enum):
 
 
 # Define the User Role Domain
-class UserRole(db.Model, BaseModel):
+class UserRole(db.Model, Base, BaseModel):
     __tablename__ = 'roles'
     __table_args__ = (db.UniqueConstraint('user_id', 'category', name='_user_id_role_category'),)
     serialize_rules = ('-deleted_date', '-updated_date', '-user_id', '-id', '-created_date')
@@ -39,7 +39,7 @@ class UserRole(db.Model, BaseModel):
 
 
 # Define the User Domain
-class User(db.Model, BaseModel):
+class User(db.Model, Base, BaseModel):
     __tablename__ = 'users'
     serialize_rules = ('-password',)
 

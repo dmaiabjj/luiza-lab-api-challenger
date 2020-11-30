@@ -1,11 +1,11 @@
 from werkzeug.security import check_password_hash
 
 from app import db
-from app.domain import BaseModel
+from app.domain import BaseModel, Base
 
 
 # Define the Customer Domain
-class Customer(db.Model, BaseModel):
+class Customer(db.Model, Base, BaseModel):
     __tablename__ = 'customers'
     serialize_rules = ('-password',)
 

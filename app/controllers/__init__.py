@@ -63,5 +63,3 @@ def handle_server_error_request(error):
     response = jsonify(BaseResponseException(payload=error.message, message="An unexpected error happened sorry"))
     response.status_code = error.status_code
     return response
-
-

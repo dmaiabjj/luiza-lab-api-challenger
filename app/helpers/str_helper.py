@@ -12,4 +12,3 @@ def sanitize(value):
     value = re.sub(r"\s+", '-', value)
 
     return value.lower()
-

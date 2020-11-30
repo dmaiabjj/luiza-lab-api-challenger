@@ -1,9 +1,11 @@
 import enum
 from datetime import datetime
 
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.inspection import inspect as sql_alchemy_inspect
 from app import db
+Base = declarative_base()
 
 PRIMITIVE = (int, str, bool, float)
 

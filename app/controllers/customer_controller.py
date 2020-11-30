@@ -19,7 +19,7 @@ def logout(jti):
     blacklist.add(jti)
 
 
-@customer_blueprint.route('/customer', endpoint='add-customer', methods=['POST'])
+@customer_blueprint.route('/customer', endpoint='add_customer', methods=['POST'])
 def add_customer():
     customer_schema = CustomerInputSchema()
     data = request.get_json()
