@@ -34,7 +34,6 @@ db/migration:
 	python manage.py db migrate -m ${name}
 
 db/migrate:
-	while ! nc -z ${DB_HOST} ${DB_PORT}; do sleep 1; done;
 	python manage.py db upgrade
 
 db/initialize:
@@ -75,7 +74,7 @@ test/run:
 	$(PYTHON_BIN)/py.test test -v -x --cov-fail-under=80
 
 
-run:
+run: build local/up db/migrate db/initialize
 	python manage.py runserver
 
 
