@@ -628,7 +628,6 @@ Para criar uma migration:
 }
 ```
 
-### Product
 #### Get products
 **HEADER** : Authorization Bearer CUSTOMER_AUTHORIZATION_TOKEN OR USER_AUTHORIZATION_TOKEN
 <br />
